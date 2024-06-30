@@ -17,7 +17,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from rest_framework.routers import DefaultRouter
+from myapp.views import BlogPostViewSet
+
+router = DefaultRouter()
+router.register(r'blogposts', BlogPostViewSet)
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/v1/', include('apis.urls'))
+    path('api/', include((router.urls, 'myapp'), namespace='myapp')),
+    # path('api/', include((router.urls, 'todos'), namespace='todos')),
 ]
+
+# urlpatterns = [
+#     path('admin/', admin.site.urls),
+#     path('api/v1/', include('apis.urls'))
+# ]
